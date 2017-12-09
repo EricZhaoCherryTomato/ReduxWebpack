@@ -1,16 +1,41 @@
-import React from 'react';
+import React , {PropTypes} from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router';
+import * as translationActions from '../../actions/TranslateActions';
 
 class HomePage extends React.Component {
+    constructor(props, context){
+        super(props, context);
+        this.state ={
+            text:""
+        };
+        this.onClickTranslate = this.onClickTranslate.bind(this);
+    };
+
+    onClickTranslate(){
+        this.props.dispatch(translationActions.loadTranslationSuccess(this.state.text));
+    }
     render() {
         return (
             <div className="jumbotron">
-                <h1>Pluralsight Administration</h1>
-                <p>React, Redux and React Router in ES6 for ultra-responsive web apps.</p>
-                <Link to="about" className="btn btn-primary btn-lg">Learn more</Link>
+                <input type="submit"
+                       value="Translate"
+                       onClick={this.onClickTranslate}/>
+                <Link to="about" className="btn btn-primary btn-lg">About</Link>
             </div>
         );
     }
 }
 
-export default HomePage;
+HomePage.propTypes = {
+    //text: PropTypes.string.isRequired,
+    //actions: PropTypes.object.isRequired
+};
+
+function mapStateToProps(state, ownProps) {
+    debugger;
+    return {
+        text: state.text
+    };
+}
+export default connect(mapStateToProps)(HomePage);
