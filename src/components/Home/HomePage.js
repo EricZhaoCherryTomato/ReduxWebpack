@@ -20,9 +20,11 @@ class HomePage extends React.Component {
         this.props.dispatch(translationActions.loadTranslationSuccess(this.state.text));
     }
     render() {
+        debugger;
         return (
             <div className="jumbotron">
-                <h1>{this.state.text}</h1>
+                <h1>{this.props.text}</h1>
+                <h1>{this.props.state}</h1>
                 <input type="text" onChange={this.onTextChange}
                        value={this.state.text} />
                 <input type="submit"
