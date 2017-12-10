@@ -2,6 +2,7 @@ import React , {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import * as translationActions from '../../actions/TranslateActions';
+import translateReducer from "../../reducers/translateReducer";
 
 class HomePage extends React.Component {
     constructor(props, context){
@@ -10,14 +11,20 @@ class HomePage extends React.Component {
             text:""
         };
         this.onClickTranslate = this.onClickTranslate.bind(this);
+        this.onTextChange = this.onTextChange.bind(this);
     };
-
+    onTextChange(event) {
+        this.setState({text: event.target.value});
+    }
     onClickTranslate(){
         this.props.dispatch(translationActions.loadTranslationSuccess(this.state.text));
     }
     render() {
         return (
             <div className="jumbotron">
+                <h1>{this.state.text}</h1>
+                <input type="text" onChange={this.onTextChange}
+                       value={this.state.text} />
                 <input type="submit"
                        value="Translate"
                        onClick={this.onClickTranslate}/>
@@ -35,7 +42,7 @@ HomePage.propTypes = {
 function mapStateToProps(state, ownProps) {
     debugger;
     return {
-        text: state.text
+        text: state.translateReducer
     };
 }
 export default connect(mapStateToProps)(HomePage);

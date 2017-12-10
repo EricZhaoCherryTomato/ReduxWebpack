@@ -5,7 +5,7 @@ export default function translateReducer(state = initialState.text, action) {
     switch (action.type){
         case types.LOAD_TRANSLATION_SUCCESS:
             debugger;
-            return action.words;
+            return action.words + "11";
         default:
             return state;
     }
