@@ -2,6 +2,7 @@ import React , {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import * as translationActions from '../../actions/TranslateActions';
+import {bindActionCreators} from 'redux';
 import translateReducer from "../../reducers/translateReducer";
 
 class HomePage extends React.Component {
@@ -17,7 +18,7 @@ class HomePage extends React.Component {
         this.setState({text: event.target.value});
     }
     onClickTranslate(){
-        this.props.dispatch(translationActions.loadTranslationSuccess(this.state.text));
+        this.props.actions.loadTranslationSuccess(this.state.text);
     }
     render() {
         debugger;
@@ -37,8 +38,8 @@ class HomePage extends React.Component {
 }
 
 HomePage.propTypes = {
-    //text: PropTypes.string.isRequired,
-    //actions: PropTypes.object.isRequired
+    text: PropTypes.string.isRequired,
+    actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
@@ -47,4 +48,10 @@ function mapStateToProps(state, ownProps) {
         text: state.translateReducer
     };
 }
-export default connect(mapStateToProps)(HomePage);
+
+function mapDispatchToProps(dispatch) {
+    return{
+        actions: bindActionCreators(translationActions, dispatch)
+    };
+}
+export default connect(mapStateToProps,mapDispatchToProps)(HomePage);
